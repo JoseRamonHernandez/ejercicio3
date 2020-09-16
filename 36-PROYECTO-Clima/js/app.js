@@ -19,6 +19,10 @@ const formulario = document.querySelector('#formulario');
         mostrarError('Ambos campos son obligatorios');
         return;
     }
+
+    //consultar la API
+
+    consultarAPI(ciudad, pais);
     
  }
 
@@ -45,4 +49,22 @@ const formulario = document.querySelector('#formulario');
      }, 5000);
  }
 
+}
+
+function consultarAPI(ciudad, pais){
+
+    const appID='a97954e3030d98e523d7fcf90f45355c';
+
+    const url= `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appID}`;  
+
+
+    fetch(url)
+        .then ( respuesta => respuesta.json())
+        .then(datos => {
+
+            if(datos.cod === "404")
+            {
+                mostrarError('Ciudad no encontrada')
+            }
+        })
 }
